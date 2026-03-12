@@ -1,17 +1,20 @@
 # Day2 Linux ファイル操作
 
-## コマンド
+## 環境
 
-touch
-cp
-mv
-rm
-cat
+OS : Ubuntu
+環境 : VirtualBox
 
-## メモ
+## 実行コマンド
 
-touch ファイル作成
-cp コピー
-mv 名前変更・移動
-rm 削除
-cat 内容表示
+touch test1.txt
+cp test1.txt test2.txt
+mv test2.txt test3.txt
+rm test3.txt
+cat test1.txt
+
+## 学び
+
+touchで空ファイルを作成できる。
+mvはファイル移動だけでなく名前変更にも使える。
+rmはゴミ箱を経由せず削除するため注意が必要。
