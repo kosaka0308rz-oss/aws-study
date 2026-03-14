@@ -9,14 +9,12 @@ OS : Ubuntu
 
 Linuxの基本コマンドを理解する
 
-````markdown
 ## 実行コマンド
 ```bash
 pwd
 ls
 cd
 ```
-````
 
 ## 結果
 
