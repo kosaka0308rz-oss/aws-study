@@ -7,10 +7,12 @@ OS : Ubuntu
 
 ## 実行コマンド
 
+```bash
 ps
 ps aux
 top
 kill 1234
+```
 
 ## 学び
 
