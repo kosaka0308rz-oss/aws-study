@@ -7,6 +7,7 @@ OS : Ubuntu
 
 ## 実行コマンド
 
+```bash
 echo "apple" > fruits.txt
 echo "banana" >> fruits.txt
 echo "apple juice" >> fruits.txt
@@ -20,6 +21,7 @@ find . -name "sample1.txt"
 find . -name "*.txt"
 
 history
+```
 
 ## 学び
 
