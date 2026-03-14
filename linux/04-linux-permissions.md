@@ -7,12 +7,14 @@ OS : Ubuntu
 
 ## 実行コマンド
 
+```bash
 touch permission.txt
 ls -l
 chmod +x permission.txt
 chmod 755 script.sh
 sudo chown ubuntu permission.txt
 sudo apt update
+```
 
 ## 学び
 
