@@ -7,11 +7,13 @@ OS : Ubuntu
 
 ## 実行コマンド
 
+```bash
 touch test1.txt
 cp test1.txt test2.txt
 mv test2.txt test3.txt
 rm test3.txt
 cat test1.txt
+```
 
 ## 学び
 
