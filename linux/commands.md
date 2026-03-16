@@ -51,3 +51,9 @@ apt update : パッケージ情報更新
 apt upgrade : ソフト更新
 apt install : ソフトインストール
 apt remove : ソフト削除
+
+# ログ確認
+dmesg : カーネルログ表示
+journalctl : systemdログ表示
+journalctl -n : 最新ログ表示
+journalctl -f : リアルタイムログ
