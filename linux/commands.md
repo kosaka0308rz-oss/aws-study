@@ -45,3 +45,9 @@ curl : HTTPリクエスト送信
 echo : 文字列 / 変数表示
 env : 環境変数一覧表示
 export : 環境変数設定
+
+# パッケージ管理
+apt update : パッケージ情報更新
+apt upgrade : ソフト更新
+apt install : ソフトインストール
+apt remove : ソフト削除
