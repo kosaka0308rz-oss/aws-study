@@ -57,3 +57,9 @@ dmesg : カーネルログ表示
 journalctl : systemdログ表示
 journalctl -n : 最新ログ表示
 journalctl -f : リアルタイムログ
+
+# パイプ / リダイレクト
+| : コマンド結果を次のコマンドへ渡す
+> : ファイル上書き保存
+>> : ファイル追記
+ps aux : 実行プロセス表示
