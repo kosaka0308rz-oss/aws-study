@@ -2,9 +2,12 @@
 
 ## 環境
 
+Local : Windows PowerShell  
+SSH Client : OpenSSH  
 Cloud : AWS  
 Service : EC2  
-OS : Ubuntu Server 22.04 LTS  
+Instance Name : aws-study  
+OS : Ubuntu Server 22.04 LTS 
 
 ## 実行コマンド
 
