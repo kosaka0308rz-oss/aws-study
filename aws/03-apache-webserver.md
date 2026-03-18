@@ -1,17 +1,21 @@
 # Day17 Apache Web Server
 
-## 概要
-EC2インスタンスにApacheをインストールし、Webサーバーとして公開した。
-ブラウザからアクセスし、Apacheのデフォルトページが表示されることを確認した。
-また、アクセスログを確認してHTTP通信の流れを理解した。
+## 環境
+
+Local : Windows PowerShell  
+SSH Client : OpenSSH  
+Cloud : AWS  
+Service : EC2  
+Instance Name : aws-study  
+OS : Ubuntu Server 22.04 LTS  
 
 ---
 
-## 使用サービス
-Amazon EC2
+## 概要
 
-## 使用ソフトウェア
-Apache HTTP Server
+EC2インスタンスにApacheをインストールし、Webサーバーとして公開した。  
+ブラウザからアクセスし、Apacheのデフォルトページが表示されることを確認した。  
+また、アクセスログを確認してHTTP通信の流れを理解した。
 
 ---
 
@@ -37,7 +41,7 @@ sudo apt update
 sudo apt install apache2 -y
 ```
 
-※ -y はインストール確認の「yes」を自動選択するオプション
+※ `-y` はインストール確認の `yes` を自動選択するオプション
 
 ---
 
@@ -49,9 +53,11 @@ sudo systemctl status apache2
 
 確認ポイント
 
-active (running)
+```
+Active: active (running)
+```
 
-Apacheサービスが正常に起動していることを確認
+Apacheサービスが正常に起動していることを確認。
 
 ---
 
@@ -69,7 +75,9 @@ systemctl is-enabled apache2
 
 結果
 
+```
 enabled
+```
 
 ---
 
@@ -81,8 +89,10 @@ ps aux | grep apache2
 
 確認ポイント
 
-apache2プロセスが複数起動していること  
-(root と www-data)
+- `apache2` プロセスが起動していること
+- `root` と `www-data` のプロセスが存在すること
+
+Apacheは親プロセスと子プロセスで動作する。
 
 ---
 
@@ -94,9 +104,13 @@ apache2プロセスが複数起動していること
 http://<EC2-Public-IP>
 ```
 
-Apache2 Ubuntu Default Page が表示されることを確認
+以下のページが表示されることを確認
 
-※セキュリティグループでHTTP(80)を許可する必要あり
+```
+Apache2 Ubuntu Default Page
+```
+
+※セキュリティグループでHTTP（ポート80）の許可が必要
 
 ---
 
@@ -108,16 +122,18 @@ Apache2 Ubuntu Default Page が表示されることを確認
 cd /var/log/apache2
 ```
 
-ログ確認
+ログ一覧確認
 
 ```bash
 ls
 ```
 
-主なログ
+主なログファイル
 
-access.log  
+```
+access.log
 error.log
+```
 
 ---
 
@@ -127,20 +143,23 @@ error.log
 tail -f access.log
 ```
 
-ブラウザからアクセスするとログが出力される
+ブラウザからアクセスするとログが出力される。
 
+例
 
 ```
-xxx.xxx.xxx.xxx - - [18/Mar/2026:13:05:48 +0000] "GET / HTTP/1.1" 200 3460 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+18.xxx.xxx.xxx - - [date] "GET / HTTP/1.1" 200
 ```
 
-ログの意味
+ログ内容
 
-IPアドレス：アクセス元  
-GET：HTTPメソッド  
-/：アクセスURL  
-HTTP/1.1：HTTPプロトコル  
-200：正常レスポンス
+| 項目 | 内容 |
+|-----|-----|
+| IPアドレス | アクセス元 |
+| GET | HTTPメソッド |
+| / | アクセスURL |
+| HTTP/1.1 | プロトコル |
+| 200 | 正常レスポンス |
 
 ---
 
