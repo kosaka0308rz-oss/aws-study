@@ -148,7 +148,7 @@ tail -f access.log
 例
 
 ```
-18.xxx.xxx.xxx - - [date] "GET / HTTP/1.1" 200
+xxx.xxx.xxx.xxx - - [18/Mar/2026:13:05:48 +0000] "GET / HTTP/1.1" 200 3460 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 ```
 
 ログ内容
