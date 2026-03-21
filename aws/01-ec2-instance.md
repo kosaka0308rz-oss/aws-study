@@ -11,10 +11,10 @@ OS : Ubuntu Server 22.04 LTS
 
 EC2インスタンスを作成。
 
-Instance type  
-t2.micro  
+インスタンスタイプ 
+t3.micro  
 
-Key pair  
+キーペア
 aws-study-key.pem  
 
 Public IP が自動割り当てされる設定で起動。
