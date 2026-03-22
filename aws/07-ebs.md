@@ -1,100 +1,114 @@
-# Day21: EBS（Elastic Block Store）
+# Day21 EBS（Elastic Block Store）
 
-## ■目的
-EC2に追加ディスク（EBS）をアタッチし、マウントして利用できるようにする。
+## 環境
+・AWS  
+・EC2（Ubuntu）  
+・EBS（gp2 / 8GB）  
 
----
+## 概要
+EC2インスタンスにEBSをアタッチし、
+追加ディスクとして利用できるようにする。
 
-## ■実施内容
-
-### ① EBSボリューム作成
-- タイプ：gp2
-- サイズ：8GB
-- 暗号化：有効（aws/ebs）
-- AZ：EC2と同じ（ap-northeast-1a）
-
----
-
-### ② EC2へアタッチ
-- デバイス名：/dev/xvdf
-
-※Ubuntu環境ではNVMeデバイスとして認識されるため、実際のデバイス名は異なる
+ブロックストレージの基本的な扱いと、
+マウントおよび権限設定の流れを理解する。
 
 ---
 
-### ③ デバイス確認
+## 作業手順
 
-    lsblk
-
-出力例：
-
-    NAME         MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
-    nvme0n1      259:0    0    8G  0 disk
-    ├─nvme0n1p1  259:1    0  7.9G  0 part /
-    ├─nvme0n1p14 259:2    0    4M  0 part
-    └─nvme0n1p15 259:3    0  106M  0 part /boot/efi
-    nvme1n1      259:4    0    8G  0 disk
-
-- nvme0n1：ルートディスク
-- nvme1n1：追加したEBS
+### 1. EBSボリューム作成
+1. EC2 → ボリューム → 作成
+2. ボリュームタイプ：gp2
+3. サイズ：8GB
+4. AZ：EC2と同じ
+5. 暗号化：有効（aws/ebs）
 
 ---
 
-### ④ フォーマット
-
-    sudo mkfs -t ext4 /dev/nvme1n1
-
----
-
-### ⑤ マウント
-
-    sudo mkdir /data
-    sudo mount /dev/nvme1n1 /data
+### 2. EC2へアタッチ
+1. 作成したボリュームを選択
+2. アクション → ボリュームをアタッチ
+3. 対象EC2を選択
+4. デバイス名：/dev/xvdf
 
 ---
 
-### ⑥ マウント確認
+### 3. デバイス確認
+```
+lsblk
+```
 
-    df -h
+※Ubuntu環境ではNVMeデバイスとして認識される  
+例：nvme1n1
 
 ---
 
-### ⑦ 書き込みテスト（エラー発生）
+### 4. フォーマット
+```
+sudo mkfs -t ext4 /dev/nvme1n1
+```
 
-    cd /data
-    echo "EBS test" > test.txt
+---
+
+### 5. マウント
+```
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+```
+
+---
+
+### 6. マウント確認
+```
+df -h
+```
+
+---
+
+### 7. 書き込みテスト（エラー発生）
+```
+cd /data
+echo "EBS test" > test.txt
+```
 
 エラー：
-    Permission denied
+Permission denied
 
 ---
 
-### ⑧ 原因
-マウント直後のディレクトリはroot所有のため、ubuntuユーザでは書き込み不可
+### 8. 権限修正
+```
+sudo chown ubuntu:ubuntu /data
+```
 
 ---
 
-### ⑨ 対応
-
-    sudo chown ubuntu:ubuntu /data
-
----
-
-### ⑩ 再テスト
-
-    echo "EBS test" > test.txt
-    cat test.txt
-
-成功
+### 9. 再テスト
+```
+echo "EBS test" > test.txt
+cat test.txt
+```
 
 ---
 
-## ■学んだこと
-
-- EBSはEC2にアタッチ可能なブロックストレージ
-- EC2とは独立して存在する（データ永続化）
-- 同一AZでないとアタッチできない
-- デバイス名は環境により変わる（NVMe）
-- マウント後は権限設定が必要
+## 確認
+・EBSがEC2にアタッチされていること  
+・/dataにマウントされていること  
+・ファイルの作成および読み取りができること  
 
 ---
+
+## 補足
+・EBSはEC2にアタッチできるブロックストレージ  
+・EC2とは独立して存在するため、インスタンス削除後もデータ保持可能  
+・EBSはAZ単位のサービスであり、同一AZでのみアタッチ可能  
+・マウント直後はroot所有のため、権限設定が必要  
+・デバイス名は環境によりNVMe形式に変換される  
+
+---
+
+## 学び
+・EBSはEC2に追加できるディスクとして利用できる  
+・ストレージは作成後すぐ使えず、フォーマットとマウントが必要  
+・Linuxの権限管理（所有者・パーミッション）の重要性を理解した  
+・クラウドでもストレージの扱いはオンプレと同様の概念であると理解した  
