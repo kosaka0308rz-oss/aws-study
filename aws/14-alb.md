@@ -102,3 +102,31 @@ ALBのDNS名にアクセス
 ・PrivateサブネットのEC2でもALB経由で公開可能であることを理解  
 ・単一構成ではなく冗長構成の重要性を理解  
 ・実務に近いWebアーキテクチャを構築できた  
+
+## 構成図
+
+```mermaid
+flowchart TB
+    User[User / Browser] --> ALB[ALB]
+
+    subgraph AWS Cloud
+        subgraph VPC[10.0.0.0/16]
+
+            subgraph Public Subnets
+                ALB
+            end
+
+            subgraph Private Subnets
+                EC2_1[EC2-1 Apache]
+                EC2_2[EC2-2 Apache]
+            end
+
+            TG[Target Group]
+
+        end
+    end
+
+    ALB --> TG
+    TG --> EC2_1
+    TG --> EC2_2
+```
