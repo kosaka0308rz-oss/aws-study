@@ -136,3 +136,4 @@ flowchart TB
     TG --> EC2_2
     ASG --> EC2_1
     ASG --> EC2_2
+```
