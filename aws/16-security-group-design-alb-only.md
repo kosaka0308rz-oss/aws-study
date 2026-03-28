@@ -112,3 +112,29 @@ http://<EC2のパブリックIP>
 ・EC2を直接公開しない設計が重要  
 ・ALBを入口にすることで拡張性と安全性が向上する  
 ・実務では「許可する通信だけ通す」設計が基本である
+
+## 構成図
+
+```mermaid
+flowchart TB
+    User[User / Browser] -->|HTTP/HTTPS| ALB[ALB]
+
+    subgraph AWS Cloud
+        subgraph VPC[10.0.0.0/16]
+            subgraph Public Subnet
+                ALB
+                ALB_SG[Security Group<br/>alb-sg<br/>80,443 from 0.0.0.0/0]
+            end
+
+            subgraph Private Subnet
+                EC2[EC2 Apache]
+                EC2_SG[Security Group<br/>ec2-sg<br/>80 from alb-sg<br/>22 from My IP]
+            end
+        end
+    end
+
+    ALB -->|Forward 80| EC2
+    ALB_SG -. attached .- ALB
+    EC2_SG -. attached .- EC2
+
+    User -. direct access NG .-> EC2
